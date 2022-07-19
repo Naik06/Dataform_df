@@ -1,6 +1,5 @@
 {
     "warehouse": "bigquery",
     "defaultSchema": "dataform",
-    "assertionSchema": "dataform_assertions",
     "defaultDatabase": "ncau-data-newsquery-dev"
 }
