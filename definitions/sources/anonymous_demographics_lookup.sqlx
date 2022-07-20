@@ -1,0 +1,7 @@
+config {
+  type: "declaration",
+  database: "ncau-data-newsquery-dev",
+  schema: "dataform",
+  name: "anonymous_demographics_lookup",
+}
+

@@ -46,7 +46,7 @@ subscriber_demographics as (
     ifnull(affluence_desc, 'Unknown') affluence_desc
   from
     adobe_subscriber_events
-    left join ncau-data-newsquery-dev.dataform.subscriber_demographics_lookup cpsa on (
+    left join ${ref("subscriber_demographics_lookup")} cpsa on (
       adobe_subscriber_events.dw_subscriber_party_id = cpsa.dw_subscriber_party_id
     )
 ),
@@ -80,7 +80,7 @@ anonymous_demographics as (
     ifnull(affluence_desc, 'Unknown') affluence_desc,
   from
     anonymous_subscriber_events
-    left join ncau-data-newsquery-dev.dataform.anonymous_demographics_lookup cpsa on (
+    left join ${ref("anonymous_demographics_lookup")} cpsa on (
       anonymous_subscriber_events.dw_browser_id = cpsa.dw_browser_id
     )
 )

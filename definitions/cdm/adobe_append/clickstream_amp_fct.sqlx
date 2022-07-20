@@ -317,7 +317,7 @@ adobe_raw_records_03_temp as (
     article_access_type.ArticleAccessType post_prop15
   FROM
     adobe_raw_records_02
-    left join ncau-data-newsquery-dev.cdm_content.capi_article_access article_access_type on (
+    left join ${ref("capi_article_access")} article_access_type on (
       adobe_raw_records_02.post_prop16 = article_access_type.articleid
       and adobe_raw_records_02.date_time between article_access_type.startdate
       and article_access_type.enddate

@@ -37,8 +37,7 @@ reply_count as ReplyCount,
 status as CommentStatus,
 FIRST_VALUE(IngestTime) OVER (PARTITION BY _id ORDER BY IngestTime) AS IngestTime,
 ROW_NUMBER() OVER (PARTITION BY _id ORDER BY IngestTime) AS RN
-FROM
-`sdm_coral_comments.comments_ingest`
+FROM ${ref("comments_ingest")}
 WHERE DatePartitioned > DATE_SUB("2022-04-01", INTERVAL 1 DAY)
 AND DatePartitioned <= "2022-04-30"
 )
