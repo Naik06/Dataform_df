@@ -1,3 +1,8 @@
+config { 
+   type: "table" 
+}
+
+
 --create table `ncau-data-newsquery-dev.cdm_adobe.clickstream_amp_fct`
 --PARTITION BY
 --dw_partition_date as
@@ -255,8 +260,8 @@ WITH adobe_raw_records_01 AS (
     and visit_page_num is not null
     and exclude_hit = 0
     --and post_page_event=0  ----
-    and DatePartitioned between DATE_SUB(@BackLoadStart, INTERVAL 1 DAY)
-    and @BackLoadEnd
+    and DatePartitioned between DATE_SUB("2022-04-01", INTERVAL 1 DAY)
+    and "2022-04-30"
     ------DATE_SUB('2021-11-01',INTERVAL 1 DAY) and '2021-11-30'
     /* Read one day prior to BackLoadStart to read sessions open at 12:00 AM and calculate engagement time */
 ),
@@ -302,8 +307,8 @@ adobe_raw_records_02 as (
   FROM
     adobe_raw_records_01
   WHERE
-    DATE(IngestTime) between @BackLoadStart
-    and @BackLoadEnd
+    DATE(IngestTime) between "2022-04-01"
+    and "2022-04-30"
     ----- '2021-11-01' and '2021-11-30'
 ),
 adobe_raw_records_03_temp as (

@@ -1,20 +1,24 @@
--- create
--- or replace table `ncau-data-newsquery-dev.dataform.clickstream_app_demographics_fct` PARTITION BY dw_partition_date as
--- select
---   *
--- from
---   (
+config { 
+   type: "table" 
+}
+
+
+
+--create or replace table `ncau-data-newsquery-dev.cdm_adobe.clickstream_amp_demographics_fct`
+-- PARTITION BY
+--   dw_partition_date as
+--select * from
+--( 
+  
 with adobe_subscriber_events as (
   /* Select distinct subscribers to reduce number of lookups */
   /* 4136122 rows  -> 152073 rows */
   select
     distinct CONSUMER_PROFILE_ID as dw_subscriber_party_id
   from
-    ${ref("clickstream_app_fct")}
-    --`cdm_adobe.clickstream_app_fct`
+    ${ref("clickstream_amp_fct")}
   where
-    dw_partition_date between @BackLoadStart
-    and @BackLoadEnd
+    dw_partition_date between "2022-04-01" and "2022-04-30"
     ----"2021-11-01" and "2022-01-31"---11 hours slower
     --and date(datetime(date_time,"Australia/Sydney")) between  @startDate and @endDate ----between "2021-11-01" and "2022-01-31"
     and MemberType = 'Subscriber'
@@ -41,7 +45,7 @@ subscriber_demographics as (
     ifnull(affluence_desc, 'Unknown') affluence_desc
   from
     adobe_subscriber_events
-    left join ${ref("subscriber_demographics_lookup")} cpsa on (
+    left join dataform.subscriber_demographics_lookup cpsa on (
       adobe_subscriber_events.dw_subscriber_party_id = cpsa.dw_subscriber_party_id
     )
 ),
@@ -49,10 +53,9 @@ anonymous_subscriber_events as (
   select
     distinct ADOBE_UUID dw_browser_id,
   from
-    ${ref("clickstream_app_fct")}
+    ${ref("clickstream_amp_fct")}
   where
-    dw_partition_date between @BackLoadStart
-    and @BackLoadEnd
+    dw_partition_date between "2022-04-01" and "2022-04-30"
     ----"2021-11-01" and "2022-01-31"---11 hours slower
     --and date(datetime(date_time,"Australia/Sydney")) between  @startDate and @endDate ----between "2021-11-01" and "2022-01-31"
     and MemberType != 'Subscriber'
@@ -76,18 +79,18 @@ anonymous_demographics as (
     ifnull(affluence_desc, 'Unknown') affluence_desc,
   from
     anonymous_subscriber_events
-    left join ${ref("anonymous_demographics_lookup")} cpsa on (
+    left join  ncau-data-newsquery-dev.dataform.anonymous_demographics_lookup cpsa on (
       anonymous_subscriber_events.dw_browser_id = cpsa.dw_browser_id
     )
 )
 select
-  app_subscriber_events.*
+  amp_subscriber_events.*
 except(page_view),
   if (
-    app_subscriber_events.articleid is not null
-    and app_subscriber_events.contenttype not like '%acq+shopfront%'
-    and app_subscriber_events.contenttype not like '%breach+shopfront%'
-    and app_subscriber_events.contenttype not like '%shopfront%',
+    amp_subscriber_events.articleid is not null
+    and amp_subscriber_events.contenttype not like '%acq+shopfront%'
+    and amp_subscriber_events.contenttype not like '%breach+shopfront%'
+    and amp_subscriber_events.contenttype not like '%shopfront%',
     page_view,
     0
   ) as page_view,
@@ -106,25 +109,24 @@ except(page_view),
   ifnull(individual_age, 'Not Available') individual_age,
   ifnull(affluence_desc, 'Unknown') affluence_desc
 from
-  ${ref("clickstream_app_fct")} app_subscriber_events
+  ${ref("clickstream_amp_fct")} amp_subscriber_events
   left join subscriber_demographics on (
-    app_subscriber_events.CONSUMER_PROFILE_ID = subscriber_demographics.dw_subscriber_party_id
+    amp_subscriber_events.CONSUMER_PROFILE_ID = subscriber_demographics.dw_subscriber_party_id
   )
 where
-  dw_partition_date between @BackLoadStart
-  and @BackLoadEnd
+  dw_partition_date between "2022-04-01" and "2022-04-30"
   ---"2021-11-01" and "2022-01-31"
   --and date(datetime(date_time,"Australia/Sydney")) between @startDate and @endDate -----"2021-11-01" and "2022-01-31"
   and MemberType = 'Subscriber'
 UNION ALL
 select
-  app_non_subscriber_events.*
+  amp_non_subscriber_events.*
 except(page_view),
   if (
-    app_non_subscriber_events.articleid is not null
-    and app_non_subscriber_events.contenttype not like '%acq+shopfront%'
-    and app_non_subscriber_events.contenttype not like '%breach+shopfront%'
-    and app_non_subscriber_events.contenttype not like '%shopfront%',
+    amp_non_subscriber_events.articleid is not null
+    and amp_non_subscriber_events.contenttype not like '%acq+shopfront%'
+    and amp_non_subscriber_events.contenttype not like '%breach+shopfront%'
+    and amp_non_subscriber_events.contenttype not like '%shopfront%',
     page_view,
     0
   ) as page_view,
@@ -143,13 +145,12 @@ except(page_view),
   ifnull(individual_age, 'Not Available') individual_age,
   ifnull(affluence_desc, 'Unknown') affluence_desc
 from
-  ${ref("clickstream_app_fct")} app_non_subscriber_events
+  ${ref("clickstream_amp_fct")} amp_non_subscriber_events
   left join anonymous_demographics on (
-    app_non_subscriber_events.UUID = anonymous_demographics.dw_browser_id
+    amp_non_subscriber_events.UUID = anonymous_demographics.dw_browser_id
   )
 where
-  dw_partition_date between @BackLoadStart
-  and @BackLoadEnd
+  dw_partition_date between "2022-04-01" and "2022-04-30"
   ---"2021-11-01" and "2022-01-31"
   --and date(datetime(date_time,"Australia/Sydney")) between @startDate and @endDate -----"2021-11-01" and "2022-01-31"
   and MemberType != 'Subscriber'
