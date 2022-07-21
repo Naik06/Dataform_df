@@ -113,7 +113,7 @@ if ((ifnull(post_prop9,'Unspecified') LIKE '%story%' or ifnull(post_prop9,'Unspe
  like '%blogs%' or ifnull(post_prop9,'Unspecified') LIKE '%gallery%'),'Article','Non-Article') Type
 
 -----------------------
-  FROM ncau-data-newsquery-dev.sdm_adobe_app.clickstream_ingest A1
+  FROM ${ref("sdm_adobe_app","clickstream_ingest")} A1
     WHERE
       hit_source not in (5,8,9)
      ------and not (ifnull(post_prop9,'Unspecified') LIKE '%story%' or ifnull(post_prop9,'Unspecified') 

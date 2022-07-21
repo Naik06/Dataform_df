@@ -251,7 +251,7 @@ from
         ) Type
         -----------------------
       FROM
-        ${ref("clickstream_ingest")} A1
+        ${ref("sdm_adobe_web","clickstream_ingest")} A1
 
       WHERE
         hit_source not in (5, 8, 9)

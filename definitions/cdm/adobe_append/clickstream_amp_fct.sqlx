@@ -250,7 +250,7 @@ WITH adobe_raw_records_01 AS (
     ) Type
     -----------------------
   FROM
-    `sdm_adobe_amp.clickstream_ingest` A1
+    ${ref("sdm_adobe_amp","clickstream_ingest")} A1
   WHERE
     hit_source not in (5, 8, 9)
     ------and not (ifnull(post_prop9,'Unspecified') LIKE '%story%' or ifnull(post_prop9,'Unspecified')

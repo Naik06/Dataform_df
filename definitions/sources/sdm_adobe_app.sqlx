@@ -1,0 +1,7 @@
+config {
+  type: "declaration",
+  database: "ncau-data-newsquery-dev",
+  schema: "sdm_adobe_app",
+  name: "clickstream_ingest",
+}
+

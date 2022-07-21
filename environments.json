@@ -11,5 +11,10 @@
       ],
       "gitRef": "master"
     }
+  ],
+  "notificationChannels": [
+    {
+      "name": "new_notification_channel"
+    }
   ]
 }

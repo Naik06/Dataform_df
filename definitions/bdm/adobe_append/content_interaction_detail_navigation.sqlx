@@ -11,7 +11,7 @@ select
   dw_partition_date,
   sum(page_view) PageView
 from
-  `cdm_adobe.clickstream_web_fct`
+  ${ref("clickstream_web_fct")}
 where
   dw_partition_date between "2022-04-01" and "2022-04-30"
   and articleid is not null

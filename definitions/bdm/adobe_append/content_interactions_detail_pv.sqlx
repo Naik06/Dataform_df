@@ -201,7 +201,7 @@ select
   sum(BreachVisits) as BreachVisits
 from
   article_views
-  join `prstn_verity.insights_gradient_minutes` defs on (
+  join ${ref("insights_gradient_minutes")} defs on (
     article_views.minutes_from_published between defs.minute_slice_start
     and defs.minute_slice_end
   )
