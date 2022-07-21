@@ -1,4 +1,7 @@
-config { type: "table" }
+config { 
+   type: "table", 
+   bigquery: {partitionBy:"dw_partition_date"}
+   }
 select
   'web' source,
   articleid,

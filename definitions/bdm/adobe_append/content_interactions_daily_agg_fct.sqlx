@@ -1,14 +1,13 @@
-config { 
-   type: "table" 
-}
+config { type: "table",
+bigquery: { partitionBy :"VisitDay",
+clusterBy :["ArticleId"] } }
 --create or replace table `ncau-data-newsquery-dev.bdm_verity.content_interactions_daily_agg_fct`
 -- PARTITION BY
 --VisitDay
 --CLUSTER BY
 ---  articleid
 --as
---select * from (
-  
+select * from (
 with d1 as (
   select
     articleid,
@@ -70,7 +69,8 @@ with d1 as (
   from
     ${ref("clickstream_web_demographics_fct")}
   where
-    dw_partition_date between "2022-04-01" and "2022-04-30"
+    dw_partition_date between "2022-04-01"
+    and "2022-04-30"
     ---and contenttype not like '%shopfront%'
   group by
     1,
@@ -150,7 +150,8 @@ with d1 as (
   from
     ${ref("clickstream_app_demographics_fct")}
   where
-    dw_partition_date between "2022-04-01" and "2022-04-30"
+    dw_partition_date between "2022-04-01"
+    and "2022-04-30"
     -- and contenttype not like '%shopfront%'
   group by
     1,
@@ -230,7 +231,8 @@ with d1 as (
   from
     ${ref("clickstream_amp_demographics_fct")}
   where
-    dw_partition_date between "2022-04-01" and "2022-04-30"
+    dw_partition_date between "2022-04-01"
+    and "2022-04-30"
     -- and contenttype not like '%shopfront%'
   group by
     1,
@@ -347,4 +349,4 @@ select
   *
 from
   d2
-  --)
+  )

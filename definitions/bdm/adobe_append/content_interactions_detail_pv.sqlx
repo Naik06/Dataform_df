@@ -1,5 +1,8 @@
-config { 
-   type: "table" 
+config {
+  type: "table",
+  bigquery: {
+    partitionBy: "TIMESTAMP_TRUNC(GradientTimeSlot, DAY)"
+  }
 }
 
 --create table `ncau-data-newsquery-dev.bdm_verity.content_interactions_detail_pv`
@@ -10,7 +13,7 @@ with article_published as (
     content_id as ArticleID,
     first_publish_timestamp as first_published
   from
-    `bdm_verity.content_dim`
+    ${ref("content_dim")}
 ),
 article_views as (
   select
@@ -58,7 +61,8 @@ article_views as (
     ${ref("clickstream_amp_demographics_fct")} ceh
     join article_published on (ceh.articleid = article_published.ArticleID)
   where
-    dw_partition_date between "2022-04-01" and "2022-04-30"
+    dw_partition_date between "2022-04-01"
+    and "2022-04-30"
     and ceh.ArticleID is not null
     and page_view > 0
   group by
@@ -113,7 +117,8 @@ article_views as (
     ${ref("clickstream_app_demographics_fct")} ceh
     join article_published on (ceh.articleid = article_published.ArticleID)
   where
-    dw_partition_date between "2022-04-01" and "2022-04-30"
+    dw_partition_date between "2022-04-01"
+    and "2022-04-30"
     --and ceh.articleid in ('81f03e39ac36a19075467570923d6b05','8bf8d2fd194207649af7b53c83cb4f85','88e25069bcca571e5cc33c34004f7d15')
     and ceh.ArticleID is not null
     and page_view > 0
@@ -169,7 +174,8 @@ article_views as (
     ${ref("clickstream_web_demographics_fct")} ceh
     join article_published on (ceh.articleid = article_published.ArticleID)
   where
-    dw_partition_date between "2022-04-01" and "2022-04-30"
+    dw_partition_date between "2022-04-01"
+    and "2022-04-30"
     --and ceh.articleid in ('81f03e39ac36a19075467570923d6b05','8bf8d2fd194207649af7b53c83cb4f85','88e25069bcca571e5cc33c34004f7d15')
     and ceh.ArticleID is not null
     and page_view > 0

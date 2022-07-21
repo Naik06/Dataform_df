@@ -1,11 +1,12 @@
 config { 
-   type: "table" 
-}
+   type: "table", 
+   bigquery: {partitionBy:"dw_partition_date"}
+   }
 
 -- create table `ncau-data-newsquery-dev.dataform.clickstream_web_fct` PARTITION BY dw_partition_date as
--- select
---   *
--- from
+select
+  *
+from
   (
     WITH adobe_raw_records_01 AS (
       SELECT

@@ -1,7 +1,7 @@
 config { 
-   type: "table" 
-}
-
+   type: "table", 
+   bigquery: {clusterBy:["ArticleId"]}
+   }
 
 --create or replace table `ncau-data-newsquery-dev.bdm_verity.content_interactions_agg_fct` 
 --cluster by ArticleId

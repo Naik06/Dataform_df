@@ -1,6 +1,7 @@
 config { 
-   type: "table" 
-}
+   type: "table", 
+   bigquery: {partitionBy:"dw_partition_date"}
+   }
 
 
 SELECT
