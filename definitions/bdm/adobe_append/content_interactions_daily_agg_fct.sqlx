@@ -1,6 +1,7 @@
-config { type: "table",
+config { type: "incremental",
 bigquery: { partitionBy :"VisitDay",
-clusterBy :["ArticleId"] } }
+clusterBy :["ArticleId"] },
+tags: ["daily"]}
 --create or replace table `ncau-data-newsquery-dev.bdm_verity.content_interactions_daily_agg_fct`
 -- PARTITION BY
 --VisitDay
@@ -69,8 +70,7 @@ with d1 as (
   from
     ${ref("clickstream_web_demographics_fct")}
   where
-    dw_partition_date between "2022-04-01"
-    and "2022-04-30"
+    ${date.date()}
     ---and contenttype not like '%shopfront%'
   group by
     1,
@@ -150,8 +150,7 @@ with d1 as (
   from
     ${ref("clickstream_app_demographics_fct")}
   where
-    dw_partition_date between "2022-04-01"
-    and "2022-04-30"
+    ${date.date()}
     -- and contenttype not like '%shopfront%'
   group by
     1,
@@ -231,8 +230,7 @@ with d1 as (
   from
     ${ref("clickstream_amp_demographics_fct")}
   where
-    dw_partition_date between "2022-04-01"
-    and "2022-04-30"
+    ${date.date()}
     -- and contenttype not like '%shopfront%'
   group by
     1,

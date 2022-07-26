@@ -1,8 +1,9 @@
 config {
-  type: "table",
+  type: "incremental",
   bigquery: {
     partitionBy: "dw_partition_date"
-  }
+  },
+  tags: ["daily"]
 }
 
 -- create
@@ -20,8 +21,7 @@ from
         ${ref("clickstream_app_fct")}
         --`cdm_adobe.clickstream_app_fct`
       where
-        dw_partition_date between "2022-04-01"
-        and "2022-04-30"
+        ${date.date()}
         ----"2021-11-01" and "2022-01-31"---11 hours slower
         --and date(datetime(date_time,"Australia/Sydney")) between  @startDate and @endDate ----between "2021-11-01" and "2022-01-31"
         and MemberType = 'Subscriber'
@@ -58,8 +58,7 @@ from
       from
         ${ref("clickstream_app_fct")}
       where
-        dw_partition_date between "2022-04-01"
-        and "2022-04-30"
+        ${date.date()}
         ----"2021-11-01" and "2022-01-31"---11 hours slower
         --and date(datetime(date_time,"Australia/Sydney")) between  @startDate and @endDate ----between "2021-11-01" and "2022-01-31"
         and MemberType != 'Subscriber'
@@ -118,8 +117,7 @@ from
         app_subscriber_events.CONSUMER_PROFILE_ID = subscriber_demographics.dw_subscriber_party_id
       )
     where
-      dw_partition_date between "2022-04-01"
-      and "2022-04-30"
+        ${date.date()}
       ---"2021-11-01" and "2022-01-31"
       --and date(datetime(date_time,"Australia/Sydney")) between @startDate and @endDate -----"2021-11-01" and "2022-01-31"
       and MemberType = 'Subscriber'
@@ -155,8 +153,7 @@ from
         app_non_subscriber_events.UUID = anonymous_demographics.dw_browser_id
       )
     where
-      dw_partition_date between "2022-04-01"
-      and "2022-04-30"
+        ${date.date()}    
       ---"2021-11-01" and "2022-01-31"
       --and date(datetime(date_time,"Australia/Sydney")) between @startDate and @endDate -----"2021-11-01" and "2022-01-31"
       and MemberType != 'Subscriber'

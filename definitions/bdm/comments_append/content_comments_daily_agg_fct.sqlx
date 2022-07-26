@@ -1,8 +1,9 @@
 config {
-  type: "table",
+  type: "incremental",
   bigquery: {
     partitionBy: "CommentDate"
-  }
+  },
+  tags: ["daily"]
 }
 
 SELECT
@@ -13,8 +14,7 @@ FROM
   ${ref("coral_comments_fct")}
 WHERE
   1 = 1
-  AND dw_partition_date between "2022-04-01"
-  and "2022-04-30"
+  AND ${date.date()}
   AND CommentStatus = 'ACCEPTED'
 GROUP BY
   1,

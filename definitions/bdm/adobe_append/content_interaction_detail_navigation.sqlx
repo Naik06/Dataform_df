@@ -1,7 +1,13 @@
-config { 
-   type: "table", 
-   bigquery: {partitionBy:"dw_partition_date"}
-   }
+config {
+  type: "incremental",
+  bigquery: {
+    partitionBy: "dw_partition_date"},
+  assertions : {
+    nonNull: ["articleid", "nextArticleID", "prevArticleID"]
+  },
+  tags: ["daily"]
+}
+
 select
   'web' source,
   articleid,
@@ -13,7 +19,7 @@ select
 from
   ${ref("clickstream_web_fct")}
 where
-  dw_partition_date between "2022-04-01" and "2022-04-30"
+  ${date.date()}
   and articleid is not null
   and (
     nextArticleID is not null
@@ -38,7 +44,7 @@ select
 from
   ${ref("clickstream_app_fct")}
 where
-  dw_partition_date between "2022-04-01" and "2022-04-30"
+  ${date.date()}
   and articleid is not null
   and (
     nextArticleID is not null
@@ -63,7 +69,7 @@ select
 from
   ${ref("clickstream_amp_fct")}
 where
-  dw_partition_date between "2022-04-01" and "2022-04-30"
+  ${date.date()}
   and articleid is not null
   and (
     nextArticleID is not null

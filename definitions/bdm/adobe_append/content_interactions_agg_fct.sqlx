@@ -1,6 +1,7 @@
 config { 
-   type: "table", 
-   bigquery: {clusterBy:["ArticleId"]}
+   type: "incremental", 
+   bigquery: {clusterBy:["ArticleId"]},
+   tags: ["daily"]
    }
 
 --create or replace table `ncau-data-newsquery-dev.bdm_verity.content_interactions_agg_fct` 
