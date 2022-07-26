@@ -1,0 +1,5 @@
+config {
+  type: "view",
+  dependencies: [ "content_interaction_detail_navigation" ]
+}
+SELECT * FROM ${ref("content_interaction_detail_navigation")}

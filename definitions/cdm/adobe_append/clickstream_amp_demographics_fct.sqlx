@@ -25,10 +25,8 @@ from
         ${ref("clickstream_amp_fct")}
       where
         ${date.date()}
-        ----"2021-11-01" and "2022-01-31"---11 hours slower
-        --and date(datetime(date_time,"Australia/Sydney")) between  @startDate and @endDate ----between "2021-11-01" and "2022-01-31"
         and MemberType = 'Subscriber'
-        and safe_cast(pcsid as INT64) is not null
+        and safe_cast(pcsid as INT64) is  null
     ),
     subscriber_demographics as (
       /* Lookup demographics for each unique pcsidi */
@@ -37,7 +35,7 @@ from
         adobe_subscriber_events.dw_subscriber_party_id,
         ifnull(
           if(
-            individual_gender is not null
+            individual_gender is  null
             and individual_gender in ('m', 'f'),
             upper(individual_gender),
             individual_gender

@@ -7,6 +7,10 @@
         {
           "name": "new_schedule",
           "cron": "32 16 * * *"
+        },
+        {
+          "name": "new_schedule_1",
+          "cron": "57 12 * * *"
         }
       ],
       "gitRef": "master"
@@ -14,7 +18,12 @@
   ],
   "notificationChannels": [
     {
-      "name": "new_notification_channel"
+      "name": "new_notification_channel",
+      "email": {
+        "to": [
+          "smita.naik@news.com.au"
+        ]
+      }
     }
   ]
 }

@@ -3,7 +3,7 @@ config {
   bigquery: {
     partitionBy: "dw_partition_date"
   },
-  tags: ["daily"]
+  tags: ["daily"],
 }
 
 SELECT

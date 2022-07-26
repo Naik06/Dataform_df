@@ -2,5 +2,5 @@ config {
   type: "declaration",
   database: "ncau-data-newsquery-dev",
   schema: "sdm_coral_comments",
-  name: "comments_ingest",
+  name: "comments_ingest"
 }
