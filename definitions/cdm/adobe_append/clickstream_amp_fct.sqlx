@@ -77,8 +77,8 @@ from
         ${ref("sdm_adobe_amp", "clickstream_ingest")} A1
       WHERE
         hit_source not in (5, 8, 9)
-        ------and not (ifnull(post_prop9,'Unspecified') LIKE '%story%' or ifnull(post_prop9,'Unspecified')
-        ------LIKE '%article%' or ifnull(post_prop9,'Unspecified') like '%blogs%' or ifnull(post_prop9,'Unspecified') LIKE '%gallery%' )
+        --and not (ifnull(post_prop9,'Unspecified') LIKE '%story%' or ifnull(post_prop9,'Unspecified')
+        ------LIKE '%article%' or ifnull(post_prop9,'Unspecified') like '%blogs%' or ifnull(post_prop9 'Unspecified') LIKE '%gallery%' )
         and post_visid_high is not null
         and post_visid_low is not null
         and visit_num is not null

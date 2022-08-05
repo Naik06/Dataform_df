@@ -1,0 +1,14 @@
+config {
+  type: "assertion",
+  "description": "testing assertions as dependencies by creating table of type assertion"
+}
+
+
+SELECT
+  *
+FROM
+  ${ref("content_interaction_detail_navigation")}
+WHERE
+  articleid IS NULL
+  OR nextArticleID IS NULL
+  OR prevArticleID IS NULL

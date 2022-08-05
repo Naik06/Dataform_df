@@ -1,5 +1,5 @@
 config {
-  type: "view",
-  dependencies: [ "content_interaction_detail_navigation" ]
+  type: "table",
+  dependencies: [ "test_assert" ]
 }
 SELECT * FROM ${ref("content_interaction_detail_navigation")}
