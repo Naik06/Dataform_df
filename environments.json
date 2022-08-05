@@ -5,12 +5,8 @@
       "configOverride": {},
       "schedules": [
         {
-          "name": "new_schedule",
-          "cron": "32 16 * * *"
-        },
-        {
-          "name": "new_schedule_1",
-          "cron": "57 12 * * *"
+          "name": "test_schedule",
+          "cron": "18 7 * * mon,tue,wed,thu,fri,sat,sun"
         }
       ],
       "gitRef": "master"
