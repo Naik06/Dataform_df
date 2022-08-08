@@ -3,12 +3,6 @@
     {
       "name": "production",
       "configOverride": {},
-      "schedules": [
-        {
-          "name": "test_schedule",
-          "cron": "18 7 * * mon,tue,wed,thu,fri,sat,sun"
-        }
-      ],
       "gitRef": "master"
     }
   ],
