@@ -1,3 +1,4 @@
+// jhrfhriu
 function adobe_raw_records_02() {
   return `adobe_raw_records_02 as (
   SELECT
