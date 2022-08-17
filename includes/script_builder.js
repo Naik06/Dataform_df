@@ -165,4 +165,6 @@ function renderScript(table) {
         -----------------------
     `;
 }
-module.exports = { renderScript };
+module.exports = {
+  renderScript
+};
