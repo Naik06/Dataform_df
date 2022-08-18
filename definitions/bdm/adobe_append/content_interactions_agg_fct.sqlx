@@ -66,10 +66,10 @@ sum(TotalComment_web) as TotalComment_web,
 sum(TotalComment_amp) as TotalComment_amp,
 sum(TotalComment_app) as TotalComment_app,
 
--- sum(TotalBodyLinksClicked) TotalBodyLinksClicked,
--- sum(BodyLinksClicked_web) as BodyLinksClicked_web ,
--- sum(BodyLinksClicked_app) as BodyLinksClicked_app ,
--- sum(BodyLinksClicked_amp) as BodyLinksClicked_amp ,
+sum(TotalBodyLinksClicked) TotalBodyLinksClicked,
+sum(BodyLinksClicked_web) as BodyLinksClicked_web ,
+sum(BodyLinksClicked_app) as BodyLinksClicked_app ,
+sum(BodyLinksClicked_amp) as BodyLinksClicked_amp ,
 
 from ${ref("content_interactions_daily_agg_fct")}
 group by
