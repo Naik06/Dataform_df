@@ -1,25 +1,2 @@
 {
-  "environments": [
-    {
-      "name": "production",
-      "configOverride": {},
-      "schedules": [
-        {
-          "name": "new_schedule",
-          "cron": "30 5 * * mon,tue,wed,thu,fri,sat,sun"
-        }
-      ],
-      "gitRef": "master"
-    }
-  ],
-  "notificationChannels": [
-    {
-      "name": "new_notification_channel",
-      "email": {
-        "to": [
-          "smita.naik@news.com.au"
-        ]
-      }
-    }
-  ]
 }
